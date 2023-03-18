@@ -23,7 +23,7 @@ The idea is to test a small full stack problem in the vein of the work we do. Wh
   - Validate that URL is a FQDN, and show an error message if not.
   - Give some indication in the UI when successfully submitting.
 
-2. Once a target has been received by the backend, run some checks on the headers and response returned by the website:
+2. Once a target has been received by the backend, run some checks on the headers and response returned when making a request to the target:
   - Required: Is an x-frame-options security header setup and secure?
   - Required: Is HSTS setup and secure?
   - Required: Do either the headers or the page contain a CSP policy? Does the CSP appear relatively secure?
@@ -33,9 +33,11 @@ The idea is to test a small full stack problem in the vein of the work we do. Wh
 
 4. Render the results on the page for each target domain and result set that has been scanned. If one of the checks fails, flag this as an issue in the interface for the end user to notice.
 
-A couple of notes:
+*A couple of notes:*
 - Please use whatever additional libraries or tools you'd prefer to get the job done.
 - We're not worried about having a responsive design. Desktop only.
 - No need to build out anything else not related to the challenge. No need for accounts or authentication, etc.
 - We're not concerned about building this in a scalable way. However, errors that might be thrown should be handled appropriately and rendered to the frontend.
 - We've included some predesigned components from Tailwind UI found at `/design`. Feel free to use them, or any others you'd like.
+
+Please send Richard any questions you have.
