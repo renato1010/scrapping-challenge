@@ -38,3 +38,4 @@ A couple of notes:
 - We're not worried about having a responsive design. Desktop only.
 - No need to build out anything else not related to the challenge. No need for accounts or authentication, etc.
 - We're not concerned about building this in a scalable way. However, errors that might be thrown should be handled appropriately and rendered to the frontend.
+- We've included some predesigned components from Tailwind UI found at `/design`. Feel free to use them, or any others you'd like.
