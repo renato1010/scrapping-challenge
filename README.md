@@ -1,4 +1,4 @@
-# Request Header Challenge
+# Full Stack Scan Challenge
 
 This project is setup with a frontend codebase using React, Typescript, and Tailwind.
 
@@ -40,4 +40,4 @@ The idea is to test a small full stack problem in the vein of the work we do. Wh
 - We're not concerned about building this in a scalable way. However, errors that might be thrown should be handled appropriately and rendered to the frontend.
 - We've included some predesigned components from Tailwind UI found at `/design`. Feel free to use them, or any others you'd like.
 
-Please send Richard any questions you have.
+Please send us any questions you have.
