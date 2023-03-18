@@ -17,7 +17,7 @@ The idea is to test a small full stack problem in the vein of the work we do. Wh
 ### Start the frontend and backend
 `npm run dev`
 
-Challenge:
+## The Challenge:
 
 1. Build a form to take as it's input a target URL and record it into the database.
   - Validate that URL is a FQDN, and show an error message if not.
