@@ -24,16 +24,16 @@ The idea is to test a small full stack problem in the vein of the work we do. Wh
   - Give some indication in the UI when successfully submitting.
 
 2. Once a target has been received by the backend, run some checks on the headers and response returned when making a request to the target:
-  - Required: Is an x-frame-options security header setup and secure?
-  - Required: Is HSTS setup and secure?
-  - Required: Do either the headers or the page contain a CSP policy? Does the CSP appear relatively secure?
-  - Optional, time willing: Does the page serve using a correctly signed SSL certificate? (https://badssl.com/ can be useful for testing, not all cases need handling but error catching would be good)
+  - *Required:* Is an x-frame-options security header setup and secure?
+  - *Required:* Is HSTS setup and secure?
+  - *Required:* Do either the headers or the page contain a CSP policy? Does the CSP appear relatively secure?
+  - *Optional, time willing:* Does the page serve using a correctly signed SSL certificate? (https://badssl.com/ can be useful for testing, not all cases need handling but error catching would be good)
 
 3. Upon completing the checks, record the results to the database.
 
 4. Render the results on the page for each target domain and result set that has been scanned. If one of the checks fails, flag this as an issue in the interface for the end user to notice.
 
-*A couple of notes:*
+***A couple of notes:***
 - Please use whatever additional libraries or tools you'd prefer to get the job done.
 - We're not worried about having a responsive design. Desktop only.
 - No need to build out anything else not related to the challenge. No need for accounts or authentication, etc.
