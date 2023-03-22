@@ -1,26 +1,14 @@
-import { isFQDN, customUrlValidation } from '../utilities';
-import type { ValidationError } from './scan-form';
-// import { CheckIcon } from '@heroicons/react/20/solid';
+import { ApiStatus } from '../api';
+import { CheckIcon } from '@heroicons/react/20/solid';
 
 type ScanInputProps = {
   url: string;
-  onValidation: (errors: ValidationError) => void;
+  status: ApiStatus;
+  onValidation: () => void;
   onUrlChange: (url: string) => void;
 };
 
-const ScanInput = ({ url, onValidation, onUrlChange }: ScanInputProps) => {
-  const validateURL = () => {
-    try {
-      const fullURL = new URL(url);
-      const fqdnError = isFQDN(fullURL.hostname) ? null : 'No fully qualified domain name';
-      const urlError = customUrlValidation(url) ? null : 'No valid URL';
-      onValidation({ fqdnError, urlError });
-    } catch (error) {
-      const fqdnError = isFQDN(url) ? null : 'No fully qualified domain name';
-      onValidation({ fqdnError, urlError: 'No valid URL' });
-    }
-  };
-
+const ScanInput = ({ url, onValidation, onUrlChange, status }: ScanInputProps) => {
   return (
     <div className='sm:grid sm:grid-cols-5 sm:items-start sm:gap-4 sm:border-gray-200 sm:pt-5'>
       <label htmlFor='url' className='block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5'>
@@ -48,13 +36,13 @@ const ScanInput = ({ url, onValidation, onUrlChange }: ScanInputProps) => {
         </div>
       </div>
       <button
-        onClick={validateURL}
+        onClick={onValidation}
         type='button'
         className='inline-flex w-3/5 justify-around items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold 
         text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 
         focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
       >
-        {/* <CheckIcon className='-ml-0.5 mr-1.5 h-5 w-5' aria-hidden='true' /> */}
+        {status === 'SUCCESS' ? <CheckIcon className='-ml-0.5 mr-1.5 h-5 w-5' aria-hidden='true' /> : null}
         Scan
       </button>
     </div>

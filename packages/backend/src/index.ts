@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import pino from "pino-http";
 import { logger } from "./logger";
+import { asyncHeadersScraping } from "./middlewares/scraping-secure-headers";
 
 const MONGO_URL = process.env.MONGO_URL ?? "mongodb://localhost:27017";
 
@@ -47,7 +48,7 @@ async function main() {
     });
 
     //TODO:add middleware to check target security headers
-    app.post("/scan", (req: Request, res: Response) => {
+    app.post("/scan", asyncHeadersScraping, (req: Request, res: Response) => {
       const body = req.body;
       //TODO:validate body
       console.log({ body });
