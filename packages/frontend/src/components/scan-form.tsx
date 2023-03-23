@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { ScanInput } from './scan-input';
 import { isFQDN, customUrlValidation } from '../utilities';
 import { useRunScan } from '../api';
+import { HeadersInfo } from './headers-info';
 
 type ErrorKeys = 'fqdnError' | 'urlError';
 export type ValidationError = Record<ErrorKeys, string | null>;
@@ -47,6 +48,7 @@ const ScanForm = () => {
 
   return (
     <div className='space-y-2'>
+      <HeadersInfo url={url} headersInfo={scanData} />
       <ScanInput url={url} onUrlChange={onUrlChange} onValidation={validateURL} status={status} />
       {showErrors && validationErrors.fqdnError && <p className='text-sm text-red-400 italic'>is not a fully qualified domain name</p>}
       {showErrors && validationErrors.urlError && <p className='text-sm text-red-400 italic'>is not a valid URL</p>}

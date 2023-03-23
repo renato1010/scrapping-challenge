@@ -3,6 +3,6 @@ const SECURITY_HEADERS = ['x-frame-options', 'strict-transport-security', 'conte
 type SecureHeadersTuple = typeof SECURITY_HEADERS;
 type SecureHeadersKeys = SecureHeadersTuple[number];
 type SecureHeadersVals = { value: string; ok: boolean };
-type SecureHeadersInfo = Record<SecureHeadersKeys, SecureHeadersVals> | Record<string, never>;
+type SecureHeadersInfo = Record<SecureHeadersKeys, SecureHeadersVals>;
 
-export type { ApiStatus, SecureHeadersInfo };
+export type { ApiStatus, SecureHeadersInfo, SecureHeadersKeys, SecureHeadersVals };
