@@ -4,8 +4,8 @@ import { gotScraping } from "got-scraping";
 const SECURITY_HEADERS = ["x-frame-options", "strict-transport-security", "content-security-policy"] as const;
 type SecureHeadersTuple = typeof SECURITY_HEADERS;
 type SecureHeadersKeys = SecureHeadersTuple[number];
-type SecureHeadersVals = { value: string; ok: boolean };
-type SecureHeadersInfo = Record<SecureHeadersKeys, SecureHeadersVals> | {};
+export type SecureHeadersVals = { value: string; ok: boolean };
+export type SecureHeadersInfo = Record<SecureHeadersKeys, SecureHeadersVals> | {};
 
 // if HSTS max-age > half year; is ok
 const isOKHSTSMaxAge = (headerVal: string | string[] | undefined): boolean => {
@@ -32,7 +32,7 @@ const isOKCSP = (headerVal: string | string[] | undefined): boolean => {
   }
   return safeDirectivesCounter >= 2;
 };
-const getSecureHeaders = (headers: Request["headers"]) => {
+const getSecureHeaders = (headers: Request["headers"]):SecureHeadersInfo => {
   let secureHeaderChecks: SecureHeadersInfo = {};
   let headerEntries = Object.entries(headers);
   headerEntries.forEach(([key, val]) => {
@@ -60,7 +60,7 @@ const getSecureHeaders = (headers: Request["headers"]) => {
   return secureHeaderChecks;
 };
 // extend Request object locally
- export interface RExtended extends Request<{}, {}, { url: string }> {
+export interface RExtended extends Request<{}, {}, { url: string }> {
   secureHeaders?: SecureHeadersInfo;
 }
 const asyncHeadersScraping = async (req: RExtended, _res: Response, next: NextFunction) => {

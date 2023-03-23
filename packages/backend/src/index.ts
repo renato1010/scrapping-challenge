@@ -1,14 +1,16 @@
 import express, { Response } from "express";
-import { MongoClient } from "mongodb";
+import { MongoClient, Db } from "mongodb";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import pino from "pino-http";
 import { logger } from "./logger";
 import { asyncHeadersScraping, validateUrl, type RExtended } from "./middlewares";
-
-const MONGO_URL = process.env["MONGO_URL"] ?? "mongodb://localhost:27017";
+import type { URLScans } from "./mongo-collections";
 
 dotenv.config();
+
+const MONGO_URL = process.env["MONGO_URL"] ?? "mongodb://localhost:27017";
+const DB_NAME = process.env["DB_NAME"] ?? "challenge";
 
 async function main() {
   try {
@@ -26,6 +28,8 @@ async function main() {
 
     const mongoClient = new MongoClient(MONGO_URL);
     await mongoClient.connect();
+    const db: Db = mongoClient.db(DB_NAME);
+    const scansCollection = db.collection<URLScans>("scans");
 
     const app = express();
 
@@ -47,9 +51,17 @@ async function main() {
       res.status(200).json({ healthy: true });
     });
 
-    app.post("/scan", [validateUrl, asyncHeadersScraping], (req: RExtended, res: Response) => {
-      const securityHeaders = req.secureHeaders;
-      res.status(200).json({ ok: true, statusCode: 200, data: securityHeaders || null });
+    app.post("/scan", [validateUrl, asyncHeadersScraping], async (req: RExtended, res: Response) => {
+      let securityHeaders = req.secureHeaders ?? {};
+      let { url } = req.body;
+      const insertData: URLScans = { ...securityHeaders, createdAT: new Date(), url };
+      const savedData = await scansCollection.insertOne(insertData);
+      console.log({ savedData });
+      if (savedData.acknowledged) {
+        res.status(200).json({ ok: true, statusCode: 200, data: securityHeaders || null });
+      } else {
+        throw new Error("Error saving scan data");
+      }
     });
 
     app.listen(process.env["PORT"], () => {
