@@ -22,7 +22,6 @@ const ScanForm = () => {
       setValidationErrors(errors);
       const { fqdnError, urlError } = errors;
       if (!fqdnError && !urlError) {
-        // eslint-disable-next-line no-console
         execScan(url);
       }
     },
@@ -30,8 +29,6 @@ const ScanForm = () => {
   );
 
   const validateURL = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log('url validate URL: ', url);
     try {
       const fullURL = new URL(url);
       const fqdnError = isFQDN(fullURL.hostname) ? null : 'No fully qualified domain name';

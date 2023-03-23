@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { ApiStatus, api, hasError } from '../';
+import { type ApiStatus, type SecureHeadersInfo, api, hasError } from '../';
 
-// type TResponse = { data: Product; ok: boolean };
-type TResponse = { ok: boolean; data: Record<string, boolean> };
+type TResponse = { ok: boolean; data: SecureHeadersInfo };
 const useRunScan = () => {
   const [status, setStatus] = useState<ApiStatus>('IDLE');
-  const [scanData, setScanData] = useState<Record<string, boolean>>({});
+  const [scanData, setScanData] = useState<SecureHeadersInfo | null>(null);
 
   const execScan = async (url: string) => {
     setStatus('PENDING');

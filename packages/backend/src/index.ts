@@ -1,12 +1,12 @@
-import express, { Request, Response } from "express";
+import express, { Response } from "express";
 import { MongoClient } from "mongodb";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import pino from "pino-http";
 import { logger } from "./logger";
-import { asyncHeadersScraping } from "./middlewares/scraping-secure-headers";
+import { asyncHeadersScraping, validateUrl, type RExtended } from "./middlewares";
 
-const MONGO_URL = process.env.MONGO_URL ?? "mongodb://localhost:27017";
+const MONGO_URL = process.env["MONGO_URL"] ?? "mongodb://localhost:27017";
 
 dotenv.config();
 
@@ -47,16 +47,13 @@ async function main() {
       res.status(200).json({ healthy: true });
     });
 
-    //TODO:add middleware to check target security headers
-    app.post("/scan", asyncHeadersScraping, (req: Request, res: Response) => {
-      const body = req.body;
-      //TODO:validate body
-      console.log({ body });
-      res.status(200).json({ ok: true, statusCode: 200, data: body });
+    app.post("/scan", [validateUrl, asyncHeadersScraping], (req: RExtended, res: Response) => {
+      const securityHeaders = req.secureHeaders;
+      res.status(200).json({ ok: true, statusCode: 200, data: securityHeaders || null });
     });
 
-    app.listen(process.env.PORT, () => {
-      logger.info(`Backend server listening on port ${process.env.PORT}`);
+    app.listen(process.env["PORT"], () => {
+      logger.info(`Backend server listening on port ${process.env["PORT"]}`);
     });
   } catch (err) {
     logger.error(err, "Failed to start app");
