@@ -9,7 +9,7 @@ export type SecureHeadersInfo = Record<SecureHeadersKeys, SecureHeadersVals> | {
 
 // if HSTS max-age > half year; is ok
 const isOKHSTSMaxAge = (headerVal: string | string[] | undefined): boolean => {
-  const HALF_YEAR_IN_SECONDS = 15_552_000;
+  const HALF_YEAR_IN_SECONDS = 31_536_000;
   if (!headerVal || Array.isArray(headerVal)) return false;
   headerVal = headerVal.trim();
   const hstsAgeReg = /max-age=(\d+).*/gi;

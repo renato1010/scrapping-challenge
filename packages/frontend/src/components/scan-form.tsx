@@ -41,11 +41,6 @@ const ScanForm = () => {
     }
   }, [url]);
 
-  //TODO:Render Scan Results
-
-  // eslint-disable-next-line no-console
-  console.log({ scanData, status, url });
-
   return (
     <div className='space-y-2'>
       <HeadersInfo url={url} headersInfo={scanData} />

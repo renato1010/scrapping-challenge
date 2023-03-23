@@ -56,7 +56,6 @@ async function main() {
       let { url } = req.body;
       const insertData: URLScans = { ...securityHeaders, createdAT: new Date(), url };
       const savedData = await scansCollection.insertOne(insertData);
-      console.log({ savedData });
       if (savedData.acknowledged) {
         res.status(200).json({ ok: true, statusCode: 200, data: securityHeaders || null });
       } else {
